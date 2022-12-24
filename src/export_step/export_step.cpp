@@ -106,6 +106,10 @@ private:
     TopTools_ListOfShape &cutouts;
     void img_hole(const class Hole &hole) override
     {
+        // we only care about through holes
+        if (hole.span != BoardLayers::layer_range_through)
+            return;
+
         Placement tr = transform;
         tr.accumulate(hole.placement);
         if (hole.shape == Hole::Shape::ROUND) {
